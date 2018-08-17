@@ -1,9 +1,9 @@
-from clarifai.rest import ClarifaiApp
-from clarifai.rest import Image as ClImage
+# from clarifai.rest import ClarifaiApp
+# from clarifai.rest import Image as ClImage
 import requests
 
-
-app = ClarifaiApp(api_key='d4f76e005d404eb69893a5f721550d62')
+kay = 'd4f76e005d404eb69893a5f721550d62'
+# app = ClarifaiApp(api_key=key)
 
 model = app.models.get('general-v1.3')
 
