@@ -22,18 +22,13 @@ func main(){
 
   resp, err := client.Do(req)
   defer resp.Body.Close()
-  // cookies := resp.Cookies() //遍历cookies
-  // for _, cookie := range cookies {
-  //     fmt.Println("cookie:", cookie)
-  // }
   if err != nil {
     return
   }
-  // fmt.Println(resp)
 
-  result, err := ioutil.ReadAll(resp.Body)
+  result, err := ioutil.ReadAll(resp.Body) // read body
   if err != nil {
     return
   }
-  fmt.Println(string(result))
+  fmt.Println(string(result)) // remember to turn into string before print
 }
