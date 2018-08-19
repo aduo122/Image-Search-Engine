@@ -2,8 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="155d4298-5e26-4d12-803a-080e97e3a468" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/curl_test.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/clarifai_test.py" beforeDir="false" afterPath="$PROJECT_DIR$/clarifai_test.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/curl_test.py" beforeDir="false" afterPath="$PROJECT_DIR$/curl_test.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/url.go" beforeDir="false" afterPath="$PROJECT_DIR$/url.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/url_working.go" beforeDir="false" afterPath="$PROJECT_DIR$/url_working.go" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -14,20 +16,20 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="clarifai_test.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="clarifai_test.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/clarifai_test.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="300">
-              <caret line="20" lean-forward="true" selection-start-line="20" selection-end-line="20" />
+            <state relative-caret-position="225">
+              <caret line="15" column="17" lean-forward="true" selection-start-line="15" selection-start-column="17" selection-end-line="15" selection-end-column="17" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="curl_test.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="curl_test.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/curl_test.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="165">
-              <caret line="11" column="16" lean-forward="true" selection-start-line="11" selection-start-column="16" selection-end-line="11" selection-end-column="16" />
+            <state relative-caret-position="525">
+              <caret line="35" lean-forward="true" selection-start-line="35" selection-end-line="35" />
             </state>
           </provider>
         </entry>
@@ -35,7 +37,7 @@
       <file leaf-file-name="client.py" pinned="false" current-in-tab="false">
         <entry file="file:///anaconda3/lib/python3.6/site-packages/clarifai/rest/client.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="52155">
+            <state relative-caret-position="15">
               <caret line="3495" selection-start-line="3495" selection-end-line="3495" />
             </state>
           </provider>
@@ -170,7 +172,7 @@
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.20404235" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.3278237" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.3278237" />
       <window_info anchor="bottom" id="Version Control" order="7" />
       <window_info anchor="bottom" id="Python Console" order="7" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -204,13 +206,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file:///anaconda3/lib/python3.6/site-packages/clarifai/rest/client.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="52155">
-          <caret line="3495" selection-start-line="3495" selection-end-line="3495" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file:///anaconda3/lib/python3.6/site-packages/bs4/element.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="152">
@@ -225,17 +220,24 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/clarifai_test.py">
+    <entry file="file://$PROJECT_DIR$/curl_test.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="300">
-          <caret line="20" lean-forward="true" selection-start-line="20" selection-end-line="20" />
+        <state relative-caret-position="525">
+          <caret line="35" lean-forward="true" selection-start-line="35" selection-end-line="35" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/curl_test.py">
+    <entry file="file:///anaconda3/lib/python3.6/site-packages/clarifai/rest/client.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="165">
-          <caret line="11" column="16" lean-forward="true" selection-start-line="11" selection-start-column="16" selection-end-line="11" selection-end-column="16" />
+        <state relative-caret-position="15">
+          <caret line="3495" selection-start-line="3495" selection-end-line="3495" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/clarifai_test.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="225">
+          <caret line="15" column="17" lean-forward="true" selection-start-line="15" selection-start-column="17" selection-end-line="15" selection-end-column="17" />
         </state>
       </provider>
     </entry>
