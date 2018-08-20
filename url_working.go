@@ -5,7 +5,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
-	"log"
 	"net/http"
 	"strings"
 	"time"
@@ -63,10 +62,11 @@ type pic_tag struct {
 		} `json:"data"`
 	} `json:"outputs"`
 }
-type pic_index struct {
-	Value float64 `json:"value"`
-	Url   string  `json:"url"`
-}
+
+// type pic_index struct {
+// 	Value float64 `json:"value"`
+// 	Url   string  `json:"url"`
+// }
 type chData struct {
 	Url string `json:"url"`
 	Tag []byte `json:"tag"`
@@ -148,49 +148,22 @@ func getTags(client *http.Client, url string, ch chan *chData) {
 	ch <- res
 }
 
-func fetch(redis *redis.Client, ch chan *chData) {
+func fetch(redisClient *redis.Client, ch chan *chData) {
 	temp := <-ch
 	result := temp.Tag
 	url := temp.Url
-
 	res := new(pic_tag)
 	json.Unmarshal(result, &res) // res: tag struct
 
 	// save {label: [url]} to redis
 	for _, scores := range res.Outputs[0].Data.Concepts {
-		temp := new(pic_index)
-		temp.Url = url
-		temp.Value = scores.Value
-
-		val, err := redis.Get(scores.Name).Result()
-
-		if err == nil { // add info to the slice
-			var s []*pic_index
-			err := json.Unmarshal([]byte(val), &s)
-			// fmt.Println(s)
-			s = append(s, temp)
-			// fmt.Println(s)
-
-			out, err := json.Marshal(s)
-			if err != nil {
-				panic(err)
-			}
-			// fmt.Println(string(out))
-			err = redis.Set(scores.Name, string(out), 0).Err()
-			if err != nil {
-				panic(err)
-			}
-		} else { //initial info for the key
-			var picBag = []*pic_index{temp}
-			picData, err := json.Marshal(picBag)
-			if err != nil {
-				log.Fatal(err)
-			}
-			picStr := string(picData)
-			err = redis.Set(scores.Name, picStr, 0).Err()
-			if err != nil {
-				panic(err)
-			}
+		//initial info for the key
+		err := redisClient.ZAdd(scores.Name, redis.Z{
+			Score:  scores.Value,
+			Member: url,
+		}).Err()
+		if err != nil {
+			panic(err)
 		}
 		fmt.Println(scores.Name, scores.Value)
 	}

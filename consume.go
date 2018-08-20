@@ -1,7 +1,6 @@
 package main
 
 import (
-
 	"fmt"
 	// "net/http"
 	// "strings"
@@ -10,7 +9,7 @@ import (
 	"github.com/go-redis/redis"
 )
 
-func main(){
+func main() {
 	redisClient := redis.NewClient(&redis.Options{
 		Addr:     "localhost:6379",
 		Password: "", // no password set
@@ -19,7 +18,7 @@ func main(){
 	pong, err := redisClient.Ping().Result()
 	fmt.Println(pong, err)
 	// fmt.Println(reflect.TypeOf(redisClient))
-	val, err := redisClient.Get("people").Result()
+	val, err := redisClient.ZRange("people", 0, 10).Result()
 	if err != nil {
 		panic(err)
 	}
