@@ -1,6 +1,11 @@
-<!-- {{#if error}} <span>{{error}}</span>{{/if}} -->
-<ul class="list-group">
-  <li class="list-group-item"><strong>Value:</strong>{{picture[0].value}}</li>
-  <li class="list-group-item"><strong>Url:</strong>{{picture[0].url}}</li>
+<ul class="picture_list">
+  <li>{{picture.id}}</li>
+  {{#each picture}}
+  <div class="">
+    <a href={{this}}>
+      <img src={{this}} width="200" height="200">
+    </a>
+  </div>
+  {{/each}}
 </ul>
 <a class="btn btn-default" href="/">Back</a>

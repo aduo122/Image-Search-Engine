@@ -75,7 +75,7 @@ type chData struct {
 const TAR string = "https://api.clarifai.com/v2/models/aaa03c23b3724a16a56b629203edc62c/outputs"
 
 func main() {
-	channel := make(chan *chData, 8)
+	channel := make(chan *chData, 10)
 	client := &http.Client{}
 
 	//initial redis
@@ -93,11 +93,12 @@ func main() {
 	// get url and send to redis
 	urls := getURLs(client)
 	for index, url := range urls {
-		if index > 5 {
+		if index > 50 {
 			break
 		}
 		go getTags(client, url, channel)
 		go fetch(redisClient, channel)
+		time.Sleep(time.Millisecond * 300)
 	}
 	time.Sleep(1 * 1e9)
 }
@@ -146,6 +147,7 @@ func getTags(client *http.Client, url string, ch chan *chData) {
 	res.Url = url
 	fmt.Println("get tag of " + url)
 	ch <- res
+	// time.Sleep(time.Second)
 }
 
 func fetch(redisClient *redis.Client, ch chan *chData) {
@@ -154,7 +156,7 @@ func fetch(redisClient *redis.Client, ch chan *chData) {
 	url := temp.Url
 	res := new(pic_tag)
 	json.Unmarshal(result, &res) // res: tag struct
-
+	fmt.Println(res)
 	// save {label: [url]} to redis
 	for _, scores := range res.Outputs[0].Data.Concepts {
 		//initial info for the key
@@ -167,4 +169,5 @@ func fetch(redisClient *redis.Client, ch chan *chData) {
 		}
 		fmt.Println(scores.Name, scores.Value)
 	}
+	// time.Sleep(1 * 1e9)
 }

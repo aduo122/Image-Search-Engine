@@ -34,23 +34,21 @@ app.get('/', function(req, res, next){
 
 // search processing
 app.post('/picture/search', function(req, res, next){
-	let tag = req.body.tag;
-	client.get(tag, function(err, obj){
+	let tag = req.body.tag.toLowerCase();
+	client.zrevrange(tag, 0, 9, function(err, obj){
 		if(err){
 			res.render('searchusers', {
 				error: 'Picture of '+ tag + ' does not exist'
 			});
 		}else{
-			let jsonObj = JSON.parse(obj);
-			obj.tag = tag;
-			console.log(jsonObj);
+			obj.id = tag;
+			console.log(obj);
 			res.render('details', {
-				picture: jsonObj
+				picture: obj
 			});
 		}
 	});
 });
-
 
 app.listen(port, function(){
 	console.log('Server started on port '+port);
