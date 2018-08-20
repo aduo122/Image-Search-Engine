@@ -5,7 +5,7 @@ const bodyParser = require('body-parser');
 const redis = require('redis')
 
 // create redis client
-var redis_host = 'localhost';
+var redis_host = '127.0.0.1';
 var redis_port = 6379;
 let client = redis.createClient(redis_port, redis_host);
 
@@ -35,15 +35,17 @@ app.get('/', function(req, res, next){
 // search processing
 app.post('/picture/search', function(req, res, next){
 	let tag = req.body.tag;
-	client.hgetall(tag, function(err, obj){
+	client.get(tag, function(err, obj){
 		if(err){
 			res.render('searchusers', {
 				error: 'Picture of '+ tag + ' does not exist'
 			});
 		}else{
+			let jsonObj = JSON.parse(obj);
 			obj.tag = tag;
+			console.log(jsonObj);
 			res.render('details', {
-				picture: obj
+				picture: jsonObj
 			});
 		}
 	});
