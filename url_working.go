@@ -63,16 +63,21 @@ type pic_tag struct {
 		} `json:"data"`
 	} `json:"outputs"`
 }
-
 type pic_index struct {
 	Value float64 `json:"value"`
 	Url   string  `json:"url"`
+}
+type chData struct {
+	Url string `json:"url"`
+	Tag []byte `json:"tag"`
 }
 
 const TAR string = "https://api.clarifai.com/v2/models/aaa03c23b3724a16a56b629203edc62c/outputs"
 
 func main() {
+	channel := make(chan *chData, 8)
 	client := &http.Client{}
+
 	//initial redis
 	redisClient := redis.NewClient(&redis.Options{
 		Addr:     "localhost:6379",
@@ -85,14 +90,16 @@ func main() {
 	} else {
 		fmt.Println(pong, err)
 	}
-
+	// get url and send to redis
 	urls := getURLs(client)
 	for index, url := range urls {
 		if index > 5 {
 			break
 		}
-		fetch(client, url, redisClient)
+		go getTags(client, url, channel)
+		go fetch(redisClient, channel)
 	}
+	time.Sleep(1 * 1e9)
 }
 
 func getURLs(client *http.Client) []string {
@@ -111,12 +118,12 @@ func getURLs(client *http.Client) []string {
 	return urls
 }
 
-func fetch(client *http.Client, url string, redis *redis.Client) {
+func getTags(client *http.Client, url string, ch chan *chData) {
 	// create url json
 	t := `{"inputs": [{"data": {"image": { "url": "` + url + `"}}}]}`
 	picUrl := []byte(t)
 
-	// make post requirement， get tag struct
+	// make post request, get tag struct
 	req, err := http.NewRequest("POST", TAR, bytes.NewReader(picUrl))
 	if err != nil {
 		return
@@ -132,17 +139,31 @@ func fetch(client *http.Client, url string, redis *redis.Client) {
 	if err != nil {
 		return
 	}
+
+	// add chData to channel
+	res := new(chData)
+	res.Tag = result
+	res.Url = url
+	fmt.Println("get tag of " + url)
+	ch <- res
+}
+
+func fetch(redis *redis.Client, ch chan *chData) {
+	temp := <-ch
+	result := temp.Tag
+	url := temp.Url
+
 	res := new(pic_tag)
 	json.Unmarshal(result, &res) // res: tag struct
 
-	// save {label: url} to redis
+	// save {label: [url]} to redis
 	for _, scores := range res.Outputs[0].Data.Concepts {
 		temp := new(pic_index)
 		temp.Url = url
 		temp.Value = scores.Value
 
 		val, err := redis.Get(scores.Name).Result()
-		// fmt.Println(val)
+
 		if err == nil { // add info to the slice
 			var s []*pic_index
 			err := json.Unmarshal([]byte(val), &s)
@@ -172,6 +193,5 @@ func fetch(client *http.Client, url string, redis *redis.Client) {
 			}
 		}
 		fmt.Println(scores.Name, scores.Value)
-		// }
 	}
 }

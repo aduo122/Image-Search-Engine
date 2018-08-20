@@ -1,0 +1,16 @@
+*{
+  margin: :0;
+  padding:0;
+}
+
+body,html{
+  background: #e0e0e0
+}
+
+.search-container{
+  position:fixed;
+  display:inline-block;
+  left:50%;
+  top: 8px;
+  width:95%
+}

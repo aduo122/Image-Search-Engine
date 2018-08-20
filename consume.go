@@ -19,9 +19,9 @@ func main(){
 	pong, err := redisClient.Ping().Result()
 	fmt.Println(pong, err)
 	// fmt.Println(reflect.TypeOf(redisClient))
-	val, err := redisClient.Get("travel").Result()
+	val, err := redisClient.Get("people").Result()
 	if err != nil {
 		panic(err)
 	}
-	fmt.Println("travel", val)
+	fmt.Println("people", val)
 }

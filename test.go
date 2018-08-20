@@ -1,31 +1,48 @@
 package main
 
 import (
-	"encoding/json"
+	"bytes"
+	// "encoding/json"
 	"fmt"
-	"log"
-	"reflect"
+	"io/ioutil"
+	// "log"
+	"net/http"
+	// "strings"
+	// "time"
+
+	// "github.com/go-redis/redis"
 )
 
-type Arc struct {
-	Head     string
-	Modifier string
+const TAR string = "https://api.clarifai.com/v2/models/aaa03c23b3724a16a56b629203edc62c/outputs"
+
+
+func main(){
+	ch := make(chan []byte, 10)
+
+	client := &http.Client{}
+	url := "https://farm7.staticflickr.com/5769/21094803716_da3cea21b8_o.jpg"
+	go getTags(client, url, ch)
+	// fmt.Println(res)
 }
 
-func main() {
-	arc := Arc{"saw", "He"}
-	fmt.Printf("%v\n", arc)
-	fmt.Printf("%+v\n", arc)
-	fmt.Printf("%#v\n", arc)
+func getTags(client *http.Client, url string, ch chan []byte) {
+	// create url json
+	fmt.Println("getting here")
+	t := `{"inputs": [{"data": {"image": { "url": "` + url + `"}}}]}`
+	picUrl := []byte(t)
 
-	// Convert structs to JSON.
-	data, err := json.Marshal(arc)
+	// make post requirement， get tag struct
+	req, err := http.NewRequest("POST", TAR, bytes.NewReader(picUrl))
 	if err != nil {
-		log.Fatal(err)
 	}
-	// fmt.Printf("%s\n", data)
-	res := string(data)
-	fmt.Println(reflect.TypeOf(data[0]))
-		fmt.Println(reflect.TypeOf(res))
-	fmt.Println(res)
+	req.Header.Set("Authorization", " Key d4f76e005d404eb69893a5f721550d62")
+	req.Header.Add("Content-Type", "application/json")
+	resp, err := client.Do(req)
+	defer resp.Body.Close()
+	if err != nil {
+	}
+	result, err := ioutil.ReadAll(resp.Body) // read body
+	if err != nil {
+	}
+	ch <- result
 }

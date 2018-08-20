@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="node/style/index.css">
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script type="text/javascript" src="node/index.js"></script>
+</head>
+
+<body>
+    <div class="page-header" id="header">
+        <div class="row">
+            <div class="col-lg-8 col-md-8 col-sm-8" style="text-align: center;">
+                <h1>Picture Search</h1>
+<!--                <h3>BTC Price Run! </h3>-->
+            </div>
+        </div>
+    </div>
+
+    <div class="search-container">
+        <form  style="text-align: center;">
+          <input type="text" placeholder="Search.." size="100" id="myinput" onkeyup="searchFunc()" name="search" style="height:25px;width:300px;">
+          <input type="submit" value="Search" style="height:30px;width:60px;" >
+        </form>
+    </div>
+
+    <ul id="wrapper">
+      <li>
+          <a href="#"> Dog </a>
+      </li>
+      <li>
+          <a href="#"> Cat </a>
+      </li>
+      <li>
+          <a href="#"> Fish </a>
+      </li>
+      <li>
+          <a href="#"> Bird </a>
+      </li>
+    </ul>
+</body>
