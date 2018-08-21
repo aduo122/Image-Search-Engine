@@ -1,3 +1,0 @@
-FROM node:5
-
-EXPOSE 3000
