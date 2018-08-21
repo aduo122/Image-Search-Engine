@@ -8,9 +8,10 @@ import (
 	"net/http"
 	"strings"
 	"time"
-
+	"os"
+	
 	"github.com/go-redis/redis"
-	redis "gopkg.in/redis.v4"
+// 	redis "gopkg.in/redis.v4"
 )
 
 type pic_tag struct {
@@ -81,7 +82,7 @@ func main() {
 
 	//initial redis
 	redisClient := redis.NewClient(&redis.Options{
-		Addr:     "redis:6379",
+		Addr:     os.Getenv("REDIS_URL"),
 		Password: "", // no password set
 		DB:       0,  // use default DB
 	})
