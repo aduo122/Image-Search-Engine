@@ -1,8 +1,8 @@
 # Image-Search
 
-Backend: Go, Restful, Redis
+Backend: Go, Redis, Restful
 
-Frontend: Express, Websocket
+Frontend: Node.js, Express.js
 
 Further development:
 1. load ballancer for large amount requests
