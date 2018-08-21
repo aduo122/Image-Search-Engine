@@ -5,7 +5,7 @@ const bodyParser = require('body-parser');
 const redis = require('redis')
 
 // create redis client
-var redis_host = '127.0.0.1';
+var redis_host = process.env.REDIS_HOST || '127.0.0.1';
 var redis_port = 6379;
 let client = redis.createClient(redis_port, redis_host);
 

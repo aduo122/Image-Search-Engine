@@ -10,6 +10,7 @@ import (
 	"time"
 
 	"github.com/go-redis/redis"
+	redis "gopkg.in/redis.v4"
 )
 
 type pic_tag struct {
@@ -80,7 +81,7 @@ func main() {
 
 	//initial redis
 	redisClient := redis.NewClient(&redis.Options{
-		Addr:     "localhost:6379",
+		Addr:     "redis:6379",
 		Password: "", // no password set
 		DB:       0,  // use default DB
 	})
@@ -93,7 +94,7 @@ func main() {
 	// get url and send to redis
 	urls := getURLs(client)
 	for index, url := range urls {
-		if index > 200 {
+		if index > 10 {
 			break
 		}
 		go getTags(client, url, channel)
