@@ -7,6 +7,8 @@ services:
     command: go run consume.go
     links:
       - redis
+    environment:
+      REDIS_URL: redis:6379
 
   node:
     image: testnode
