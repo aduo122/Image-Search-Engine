@@ -93,7 +93,7 @@ func main() {
 	// get url and send to redis
 	urls := getURLs(client)
 	for index, url := range urls {
-		if index > 50 {
+		if index > 200 {
 			break
 		}
 		go getTags(client, url, channel)
