@@ -6,12 +6,12 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
+	"os"
 	"strings"
 	"time"
-	"os"
-	
+
 	"github.com/go-redis/redis"
-// 	redis "gopkg.in/redis.v4"
+	// 	redis "gopkg.in/redis.v4"
 )
 
 type pic_tag struct {
@@ -65,10 +65,6 @@ type pic_tag struct {
 	} `json:"outputs"`
 }
 
-// type pic_index struct {
-// 	Value float64 `json:"value"`
-// 	Url   string  `json:"url"`
-// }
 type chData struct {
 	Url string `json:"url"`
 	Tag []byte `json:"tag"`
@@ -82,7 +78,8 @@ func main() {
 
 	//initial redis
 	redisClient := redis.NewClient(&redis.Options{
-		Addr:     os.Getenv("REDIS_URL"),
+		Addr: os.Getenv("REDIS_URL"),
+		// Addr:     os.Getenv("REDIS_HOST"):6379,
 		Password: "", // no password set
 		DB:       0,  // use default DB
 	})
@@ -94,10 +91,7 @@ func main() {
 	}
 	// get url and send to redis
 	urls := getURLs(client)
-	for index, url := range urls {
-		if index > 10 {
-			break
-		}
+	for _, url := range urls {
 		go getTags(client, url, channel)
 		go fetch(redisClient, channel)
 		time.Sleep(time.Millisecond * 300)
@@ -147,7 +141,7 @@ func getTags(client *http.Client, url string, ch chan *chData) {
 	res := new(chData)
 	res.Tag = result
 	res.Url = url
-	fmt.Println("get tag of " + url)
+	// fmt.Println("get tag of " + url)
 	ch <- res
 	// time.Sleep(time.Second)
 }
@@ -158,7 +152,6 @@ func fetch(redisClient *redis.Client, ch chan *chData) {
 	url := temp.Url
 	res := new(pic_tag)
 	json.Unmarshal(result, &res) // res: tag struct
-	fmt.Println(res)
 	// save {label: [url]} to redis
 	for _, scores := range res.Outputs[0].Data.Concepts {
 		//initial info for the key
@@ -169,7 +162,6 @@ func fetch(redisClient *redis.Client, ch chan *chData) {
 		if err != nil {
 			panic(err)
 		}
-		fmt.Println(scores.Name, scores.Value)
+		// fmt.Println(scores.Name, scores.Value)
 	}
-	// time.Sleep(1 * 1e9)
 }
