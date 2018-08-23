@@ -8,8 +8,3 @@ Backend: Go, Redis, REST
 
 Frontend: Node.js, Express.js, Handlebars
 - Use "zrevrange" to retrive top 10 images of the tag
-
-Further development:
-1. load ballancer for large amount requests
-2. batch process vs stream process
-3. frontend optimization

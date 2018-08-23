@@ -1,0 +1,29 @@
+# Image-Search
+Project Structure
+
+Backend: Go, Redis, REST
+- Use Claifai API (https://clarifai.com/developer/guide/) to analyze image and get tags
+- Create Revert Index, using tag to search image url
+- Store the key-value pair to redis using "Zadd" function, sort the value by ranking Value
+
+Frontend: Node.js, Express.js, Handlebars
+- Use "zrevrange" to retrive top 10 images of the tag
+
+Further development:
+1. Improve effectiveness of input words
+  Rewrite Keywords, consider synonym and related words
+
+
+2. Optimize ranking algorithm, more factors needed to be considered.
+  Consider synonym and related words,
+  make sure the tag is unique of a picture, cat one high score -> theme clear, multiple high score, theme not clear
+
+  learn from user profile
+
+3. challenge of potential large amout of requests:
+  add load ballancer, separate read and write server, distributed system
+
+4. batch process vs stream process
+  new images are always being generated, do we need to update the database in real time?
+
+5. frontend optimization
