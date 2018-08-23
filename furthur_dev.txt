@@ -12,18 +12,38 @@ Frontend: Node.js, Express.js, Handlebars
 Further development:
 1. Improve effectiveness of input words
   Rewrite Keywords, consider synonym and related words
+  eg. input : 'animal' -> query ['animal', 'dog', 'cat', 'farm']
 
+  Run text understanding model on synoym text database, using NLP library like work2vector
 
 2. Optimize ranking algorithm, more factors needed to be considered.
-  Consider synonym and related words,
-  make sure the tag is unique of a picture, cat one high score -> theme clear, multiple high score, theme not clear
+  - Consider the uniqueness of the tag
+  For instance, when querying "dog", the first image returns ["dog": 0.99, "sky":0.7, "plant":0.6] as dog would be the main theme.
+  the second image returns ["dog": 0.99, "sky":0.98, "plant":0.95] as all of dog, sky and plant could be the main theme.
+  So, the first image might better fit to the keyword "dog" and should rank higher than the second one.
 
-  learn from user profile
+  - Learn from user profile
+  If we have user profile and user click history, we could speculate which image fits better to the user.
+  For instance, if we know for male software engineers, they click "cat" images more frequently when searching "pets",
+  then for the new query, images having "cat" tag should rank higher for people with same user profile.
 
-3. challenge of potential large amout of requests:
-  add load ballancer, separate read and write server, distributed system
+3. Batch process vs Stream process
+  For now, we're using a batch process method, since all the images are pre-stored.
+  But actually, the new images are generated all the time, and there're two ways to run the data process.
 
-4. batch process vs stream process
-  new images are always being generated, do we need to update the database in real time?
+  For batch process, we need to store the images temporarily and run image process periodically to add new image tags into revert index database.
+  For stream process, we establish a data pipeline to feed the image data continuously, run the data process and add new image tags into revert index database in real time.
+
+  When the real time updates are important, stream process should be adopted. Like traffic monitor
+  When the computing power is kind limited and real time updates are not that important, batch process is prefered. Like making library record
+
+4. Challenge of potential large amout of requests
+  When the request amount got increased, we need to increase the number of server, and some distributed system techniques should be adopted.
+  For instance, separate read and write server, could increase the proficiency.
+  Also, we could use a load balancer to manage the servers.
+  And we could dynamically scale out/in the amount of servers, so when there're peak of requests the service could keep running, while saving resources for normal condition.
+
+
+
 
 5. frontend optimization
