@@ -2,19 +2,19 @@
 Project Structure
 
 Backend: Go, Redis, REST
-- Use Claifai API (https://clarifai.com/developer/guide/) to analyze image and get tags
+- Use Claifai API (https://clarifai.com/developer/guide/) to analyze image and get tags via multi thread goroutine method
 - Create Revert Index, using tag to search image url
 - Store the key-value pair to redis using "Zadd" function, sort the value by ranking Value
 
 Frontend: Node.js, Express.js, Handlebars
-- Use "zrevrange" to retrive top 10 images of the tag
+- Use "zrevrange" to retrieve top 10 images of the tag
 
 Further development:
 1. Improve effectiveness of input words
   Rewrite Keywords, consider synonym and related words
   eg. input : 'animal' -> query ['animal', 'dog', 'cat', 'farm']
 
-  Run text understanding model on synoym text database, using NLP library like work2vector
+  Run text understanding model on synonym text database, using NLP library like work2vector
 
 2. Optimize ranking algorithm, more factors needed to be considered.
   - Consider the uniqueness of the tag
@@ -35,15 +35,11 @@ Further development:
   For stream process, we establish a data pipeline to feed the image data continuously, run the data process and add new image tags into revert index database in real time.
 
   When the real time updates are important, stream process should be adopted. Like traffic monitor
-  When the computing power is kind limited and real time updates are not that important, batch process is prefered. Like making library record
+  When the computing power is kind limited and real time updates are not that important, batch process is preferred. Like making library record
 
-4. Challenge of potential large amout of requests
+4. Challenge of potential large amount of requests
   When the request amount got increased, we need to increase the number of server, and some distributed system techniques should be adopted.
-  For instance, separate read and write server, could increase the proficiency.
-  Also, we could use a load balancer to manage the servers.
-  And we could dynamically scale out/in the amount of servers, so when there're peak of requests the service could keep running, while saving resources for normal condition.
-
-
-
-
-5. frontend optimization
+  For instance, we could separate read and write server, could increase the proficiency.
+  Also, we could use a load balancer to manage the usage of servers.
+  And we could add a controller to monitor amount of user requests and dynamically scale out/in the amount of servers
+  so when there're peak of requests the service could keep running well, while saving resources for normal condition.

@@ -7,7 +7,6 @@ services:
     networks:
       - webnet
     environment:
-      REDIS_HOST: redis
       REDIS_URL: redis:6379
 
   node:

@@ -11,7 +11,6 @@ import (
 	"time"
 
 	"github.com/go-redis/redis"
-	// 	redis "gopkg.in/redis.v4"
 )
 
 type pic_tag struct {
@@ -78,8 +77,7 @@ func main() {
 
 	//initial redis
 	redisClient := redis.NewClient(&redis.Options{
-		Addr: os.Getenv("REDIS_URL"),
-		// Addr:     os.Getenv("REDIS_HOST"):6379,
+		Addr:     os.Getenv("REDIS_URL"),
 		Password: "", // no password set
 		DB:       0,  // use default DB
 	})
@@ -100,7 +98,6 @@ func main() {
 }
 
 func getURLs(client *http.Client) []string {
-	// client := &http.Client{}
 	target := "https://s3.amazonaws.com/clarifai-data/backend/api-take-home/images.txt"
 	request, err := http.NewRequest("GET", target, nil)
 	if err != nil {
@@ -137,11 +134,11 @@ func getTags(client *http.Client, url string, ch chan *chData) {
 		return
 	}
 
-	// add chData to channel
+	// add picture data to channel
 	res := new(chData)
 	res.Tag = result
 	res.Url = url
-	// fmt.Println("get tag of " + url)
+
 	ch <- res
 	// time.Sleep(time.Second)
 }
@@ -152,9 +149,9 @@ func fetch(redisClient *redis.Client, ch chan *chData) {
 	url := temp.Url
 	res := new(pic_tag)
 	json.Unmarshal(result, &res) // res: tag struct
-	// save {label: [url]} to redis
+
+	// add {label: url} to redis
 	for _, scores := range res.Outputs[0].Data.Concepts {
-		//initial info for the key
 		err := redisClient.ZAdd(scores.Name, redis.Z{
 			Score:  scores.Value,
 			Member: url,
@@ -162,6 +159,5 @@ func fetch(redisClient *redis.Client, ch chan *chData) {
 		if err != nil {
 			panic(err)
 		}
-		// fmt.Println(scores.Name, scores.Value)
 	}
 }
