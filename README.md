@@ -24,3 +24,8 @@ under Image_Search_engine/
 in browser, visit page  
 
     localhost:3000
+    
+ 
+<img src="https://raw.githubusercontent.com/aduo122/Image-Search-Engine/master/demo1.JPG" width="40%">.
+
+<img src="https://raw.githubusercontent.com/aduo122/Image-Search-Engine/master/demo2.JPG" width="40%">.
