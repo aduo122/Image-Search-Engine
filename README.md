@@ -9,14 +9,18 @@ Backend: Go, Redis, REST
 Frontend: Node.js, Express.js, Handlebars
 - Use "zrevrange" to retrive top 10 images of the tag
 
-under Image_Search_engine/app/
-  docker build -t go-app .
+under Image_Search_engine/app/   
 
-under Image_Search_engine/node/
-  docker build -t node-web .
+    docker build -t go-app .
 
-under Image_Search_engine/
-  docker-compose up
+under Image_Search_engine/node/ 
 
-in browser, visit page
-  localhost:3000
+    docker build -t node-web .
+
+under Image_Search_engine/  
+
+    docker-compose up
+
+in browser, visit page  
+
+    localhost:3000
