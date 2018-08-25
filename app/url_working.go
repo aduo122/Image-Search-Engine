@@ -138,9 +138,11 @@ func getTags(client *http.Client, url string, ch chan *chData) {
 	res := new(chData)
 	res.Tag = result
 	res.Url = url
+	// fmt.Println(string(result))
 
 	ch <- res
 	// time.Sleep(time.Second)
+	time.Sleep(1 * 1e9)
 }
 
 func fetch(redisClient *redis.Client, ch chan *chData) {
@@ -149,6 +151,10 @@ func fetch(redisClient *redis.Client, ch chan *chData) {
 	url := temp.Url
 	res := new(pic_tag)
 	json.Unmarshal(result, &res) // res: tag struct
+
+	if len(res.Outputs) == 0 {
+		fmt.Println("Request Error", res.Status)
+	}
 
 	// add {label: url} to redis
 	for _, scores := range res.Outputs[0].Data.Concepts {
@@ -159,5 +165,7 @@ func fetch(redisClient *redis.Client, ch chan *chData) {
 		if err != nil {
 			panic(err)
 		}
+		fmt.Println(scores.Name, scores.Value)
 	}
+	time.Sleep(1 * 1e9)
 }
