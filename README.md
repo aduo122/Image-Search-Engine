@@ -9,6 +9,8 @@ Backend: Go, Redis, REST
 Frontend: Node.js, Express.js, Handlebars
 - Use "zrevrange" to retrive top 10 images of the tag
 
+
+
 under Image_Search_engine/app/   
 
     docker build -t go-app .
@@ -26,4 +28,4 @@ in browser, visit page
     localhost:3000
     
  
-<img src="https://raw.githubusercontent.com/aduo122/Image-Search-Engine/master/demo1.png" width="30%">.<img src="https://raw.githubusercontent.com/aduo122/Image-Search-Engine/master/demo2.png" width="30%">.
+<img src="https://raw.githubusercontent.com/aduo122/Image-Search-Engine/master/demo1.png" width="50%">.<img src="https://raw.githubusercontent.com/aduo122/Image-Search-Engine/master/demo2.png" width="50%">.
