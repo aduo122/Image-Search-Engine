@@ -28,4 +28,6 @@ in browser, visit page
     localhost:3000
     
  
+Demo
+
 <img src="https://raw.githubusercontent.com/aduo122/Image-Search-Engine/master/demo1.png" width="40%">.<img src="https://raw.githubusercontent.com/aduo122/Image-Search-Engine/master/demo2.png" width="40%">.
